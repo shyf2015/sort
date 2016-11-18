@@ -4,6 +4,12 @@
 	<meta charset="UTF-8">
 	<title>常用排序</title>
 	<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/4.0.0-alpha.4/css/bootstrap.css">
+<style>
+	@keyframes donghua{
+		from{color: #eee;}
+		to{color: red;}
+	}
+</style>
 </head>
 <body style="background: #6ee">
 <div class="container">
@@ -12,7 +18,10 @@
 			<label class="text-default formcontrol btn-default">请选择数组长度</label>
 		</div>
 		<div class="form-group">
-			<input class="form-control" id="numL" type="number" value="15" max="999" style="width: 60px;">
+			<input class="form-control" id="numL" type="number" value="10" max="999" min="0" style="width: 70px;">
+		</div>
+		<div class="form-group">
+			<label id="fanwei" class="text-default formcontrol btn-default">长度范围0~999</label>
 		</div>
 		<div class="form-group">
 			<button type="button" class="btn btn-warning" id="createRandom">生成随机数组</button>
@@ -46,9 +55,17 @@
 		var arr1 = [88,12,34,43,30,55,89,21,66,98,32,33,77,70,37];
 		$('#data').val(arr1);
 		$('#createRandom').on('click',function(){
+			if($("#numL").val()>999 || $('#numL').val()<0){
+				$('#fanwei').css({
+					'animation':'donghua '+0.5+'s linear',
+					'animation-iteration-count':5
+				});
+				return;
+			}
 			var num = $('#numL').val();
 			$('#data').val(createRandom(num));
 		})
+		//生成随机数组
 		function createRandom(num){
 			var arr = [];
 			for(var i=0;i<num;i++){
@@ -64,7 +81,7 @@
 			}else{
 				var Arr = result.split('\n');
 				var L = Arr.length;
-				$('#result').val(Arr[L-2].slice(3));
+				$('#result').val(Arr[L-2]);
 			}
 		})
 		$('#select').on('click',function(){
@@ -75,7 +92,7 @@
 			}else{
 				var Arr = result.split('\n');
 				var L = Arr.length;
-				$('#result').val(Arr[L-2].slice(3));
+				$('#result').val(Arr[L-2]);
 			}
 		})
 		$('#insert').on('click',function(){
@@ -86,16 +103,17 @@
 			}else{
 				var Arr = result.split('\n');
 				var L = Arr.length;
-				$('#result').val(Arr[L-2].slice(3));
+				$('#result').val(Arr[L-2]);
 			}
 		})
+		//冒泡排序
 		function bulle(arr){
 			var temp,index=1;
 			var result_str='';
 			//var time1 = new Date().getTime();
 			for(var j=0;j<arr.length;j++){
-				for(var i=0;i<arr.length-1-j;i++){
-					if(arr[i]>arr[i+1]){
+				for(var i=0;i<arr.length-1;i++){
+					if(Number(arr[i])>Number(arr[i+1])){
 						temp = arr[i];
 						arr[i] = arr[i+1];
 						arr[i+1] = temp;
@@ -108,13 +126,14 @@
 			return result_str;
 		}
 		//$('#result').val(insert(arr).split('\n')[11].slice(3));
+		//选择排序
 		function select(arr){
 			var temp,index=1,k=0;
 			var result_str='';
 			for(var j=0;j<arr.length;j++){
 				k=j;
 				for(var i=j;i<arr.length;i++){
-					if(arr[i]<arr[k]){
+					if(Number(arr[i])<Number(arr[k])){
 						k=i;
 					}	
 				}
@@ -127,6 +146,7 @@
 			}
 			return result_str;
 		}
+		//插入排序
 		function insert(arr){
 			var index=1;
 			var result_str='';
@@ -134,7 +154,7 @@
 			newarr.push(arr[0]);
 			for(var i=1;i<arr.length;i++){
 				for(var j=0;j<i;j++){
-					if(arr[i]<newarr[j]){
+					if(Number(arr[i])<Number(newarr[j])){
 						newarr.splice(j,0,arr[i]);
 						result_str+=(index++) +'：'+newarr.join(',')+'\n';
 						break;
@@ -147,6 +167,10 @@
 				//result_str+=(index++) +'：'+newarr.join(',')+'\n';
 			}
 			return result_str;
+		}
+		//字体闪动
+		function font(text,color,count){
+
 		}
 	})()
 </script>
