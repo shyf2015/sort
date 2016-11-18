@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>常用排序</title>
+	<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/4.0.0-alpha.4/css/bootstrap.css">
+</head>
+<body style="background: #6ee">
+<div class="container">
+	<form class="form-inline" role="form">
+		<div class="form-group">
+			<label class="text-default formcontrol btn-default">请选择数组长度</label>
+		</div>
+		<div class="form-group">
+			<input class="form-control" id="numL" type="number" value="15" max="999" style="width: 60px;">
+		</div>
+		<div class="form-group">
+			<button class="btn btn-warning" id="createRandom">生成随机数组</button>
+		</div>
+	</form>
+</div>
+	<div class="container">
+		<textarea id="data" cols="100" rows="5" style="resize: none"></textarea><br>
+	</div>
+	<div class="container">
+		<form class="form-inline" role="form">
+		<div class="form-group">
+			<input class="form-control" type="checkbox" id="print">
+			<label class="form-control btn-default" for="print">打印过程</label>
+		</div>
+		<div class="form-group">
+			<button type="button" class="btn btn-info" id="bulle">冒泡排序</button>
+			<button type="button" class="btn btn-info" id="select">选择排序</button>
+			<button type="button" class="btn btn-info" id="insert">插入排序</button><br>
+		</div>
+		</form>
+	</div>
+	<div class="container">
+		<textarea id="result" cols="100" rows="16" style="resize: none"></textarea><br>
+	</div>
+<script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/bootstrap/4.0.0-alpha.4/js/bootstrap.js"></script>
+<script>
+	(function(){
+
+		var arr1 = [88,12,34,43,30,55,89,21,66,98,32,33,77,70,37];
+		$('#data').val(arr1);
+		$('#createRandom').on('click',function(){
+			var num = $('#numL').val();
+			$('#data').val(createRandom(num));
+		})
+		function createRandom(num){
+			var arr = [];
+			for(var i=0;i<num;i++){
+				arr.push((Math.random()*num*10)|0);
+			}
+			return arr;
+		}
+		$('#bulle').on('click',function(){
+			var val = $('#data').val().split(',');
+			var result = bulle(val);
+			if($('#print')[0].checked){
+				$('#result').val(result);
+			}else{
+				var Arr = result.split('\n');
+				var L = Arr.length;
+				$('#result').val(Arr[L-2].slice(3));
+			}
+		})
+		$('#select').on('click',function(){
+			var val = $('#data').val().split(',');
+			var result = select(val);
+			if($('#print')[0].checked){
+				$('#result').val(result);
+			}else{
+				var Arr = result.split('\n');
+				var L = Arr.length;
+				$('#result').val(Arr[L-2].slice(3));
+			}
+		})
+		$('#insert').on('click',function(){
+			var val = $('#data').val().split(',');
+			var result = insert(val);
+			if($('#print')[0].checked){
+				$('#result').val(result);
+			}else{
+				var Arr = result.split('\n');
+				var L = Arr.length;
+				$('#result').val(Arr[L-2].slice(3));
+			}
+		})
+		function bulle(arr){
+			var temp,index=1;
+			var result_str='';
+			//var time1 = new Date().getTime();
+			for(var j=0;j<arr.length;j++){
+				for(var i=0;i<arr.length-1-j;i++){
+					if(arr[i]>arr[i+1]){
+						temp = arr[i];
+						arr[i] = arr[i+1];
+						arr[i+1] = temp;
+						result_str += (index++) +'：'+arr.join(',')+'\n';
+					}
+				}
+			}
+			//var time2 = new Date().getTime();
+			//console.log(time1,time2);
+			return result_str;
+		}
+		//$('#result').val(insert(arr).split('\n')[11].slice(3));
+		function select(arr){
+			var temp,index=1,k=0;
+			var result_str='';
+			for(var j=0;j<arr.length;j++){
+				k=j;
+				for(var i=j;i<arr.length;i++){
+					if(arr[i]<arr[k]){
+						k=i;
+					}	
+				}
+				if(arr[j]!=arr[k]){
+					temp = arr[j];
+					arr[j] = arr[k];
+					arr[k] = temp;
+					result_str += (index++) +'：'+arr.join(',')+'\n';
+				}
+			}
+			return result_str;
+		}
+		function insert(arr){
+			var index=1;
+			var result_str='';
+			var newarr = [];
+			newarr.push(arr[0]);
+			for(var i=1;i<arr.length;i++){
+				for(var j=0;j<i;j++){
+					if(arr[i]<newarr[j]){
+						newarr.splice(j,0,arr[i]);
+						result_str+=(index++) +'：'+newarr.join(',')+'\n';
+						break;
+					}else if(j==(i-1)){
+						newarr.push(arr[i]);
+						result_str+=(index++) +'：'+newarr.join(",")+'\n';
+					}
+				}
+				//newarr.push(arr[i]);
+				//result_str+=(index++) +'：'+newarr.join(',')+'\n';
+			}
+			return result_str;
+		}
+	})()
+</script>
+</body>
+</html>
