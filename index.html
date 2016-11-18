@@ -18,10 +18,10 @@
 			<label class="text-default formcontrol btn-default">请选择数组长度</label>
 		</div>
 		<div class="form-group">
-			<input class="form-control" id="numL" type="number" value="10" max="999" min="0" style="width: 70px;">
+			<input class="form-control" id="numL" type="number" value="10" max="99" min="0" style="width: 70px;">
 		</div>
 		<div class="form-group">
-			<label id="fanwei" class="text-default formcontrol btn-default">长度范围0~999</label>
+			<label id="fanwei" class="text-default formcontrol btn-default">长度范围0~99</label>
 		</div>
 		<div class="form-group">
 			<button type="button" class="btn btn-warning" id="createRandom">生成随机数组</button>
@@ -55,7 +55,7 @@
 		var arr1 = [88,12,34,43,30,55,89,21,66,98,32,33,77,70,37];
 		$('#data').val(arr1);
 		$('#createRandom').on('click',function(){
-			if($("#numL").val()>999 || $('#numL').val()<0){
+			if($("#numL").val()>99 || $('#numL').val()<0){
 				$('#fanwei').css({
 					'animation':'donghua '+0.5+'s linear',
 					'animation-iteration-count':5
